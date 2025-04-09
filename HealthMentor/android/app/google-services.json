@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "676703684103",
+    "project_id": "my-preppal",
+    "storage_bucket": "my-preppal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676703684103:android:8d5a580a7a6cf4ca44cca2",
+        "android_client_info": {
+          "package_name": "llama.preppal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBibgVmQnuPgunzF0ICnRJiH3qX_dCtww4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
