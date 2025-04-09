@@ -1,0 +1,152 @@
+import 'package:flutter/foundation.dart' as foundation;
+import 'package:flutter_app/comchat/com_message_card.dart';
+import 'package:flutter_app/comchat/comchat_controller.dart';
+import 'package:flutter_app/constants/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class ComChatScreenMob extends StatefulWidget {
+  const ComChatScreenMob({super.key});
+
+  @override
+  State<ComChatScreenMob> createState() => _ComChatScreenMobState();
+}
+
+class _ComChatScreenMobState extends State<ComChatScreenMob> {
+  final _c = Get.put(ComchatController());
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final screenSizeHeight = screenSize.height;
+    final screenSizeWidth = screenSize.width;
+
+    return Center(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF001120),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 15),
+            const Text("Community Service & Social Responsibility",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Color(0xffA6FAFF)),
+                textAlign: TextAlign.center),
+            Expanded(
+              flex: 1,
+              child: Container(
+                margin: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: foundation.defaultTargetPlatform == TargetPlatform.iOS
+                      ? 30
+                      : 10,
+                  top: 10,
+                ),
+                width: screenSize.width * 0.9,
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(0, 23, 42, 0.7),
+                  border: Border.all(color: const Color(0xffA6FAFF), width: 2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Scaffold(
+                    backgroundColor: const Color.fromRGBO(0, 23, 42, 0.7),
+                    body: Stack(
+                      children: [
+                        Obx(
+                          () => Padding(
+                            padding: EdgeInsets.only(
+                                bottom: screenSizeHeight *
+                                    0.07), // Adjust padding to make space for input field
+                            child: ListView(
+                              physics: const BouncingScrollPhysics(),
+                              controller: _c.scrollC,
+                              padding: EdgeInsets.only(
+                                top: screenSizeHeight * .02,
+                                bottom: screenSizeWidth * .1,
+                              ),
+                              children: _c.list
+                                  .map((e) => ComMessageCard(commessage: e))
+                                  .toList(),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            color: const Color.fromRGBO(0, 23, 42, 0.7),
+                            padding: const EdgeInsets.all(5.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _c.textC,
+                                    onTapOutside: (e) =>
+                                        FocusScope.of(context).unfocus(),
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                    cursorColor: const Color(0xffA6FAFF),
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      fillColor:
+                                          const Color.fromRGBO(49, 56, 73, 0.5),
+                                      filled: true,
+                                      hintText: "  Ask me anything....",
+                                      hintStyle: const TextStyle(
+                                          color: Colors.grey, fontSize: 12),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                        horizontal: 10,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                        borderSide: const BorderSide(
+                                            color: CustomColor.greenSecondary,
+                                            width: 1),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                        borderSide: const BorderSide(
+                                            color: CustomColor.greenSecondary,
+                                            width: 2),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 9),
+                                CircleAvatar(
+                                  radius: 16,
+                                  backgroundColor: CustomColor.greenPrimary,
+                                  child: IconButton(
+                                    onPressed: _c.askQuestion,
+                                    icon: const Icon(
+                                      Icons.send,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
